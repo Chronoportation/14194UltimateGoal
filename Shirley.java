@@ -1,6 +1,7 @@
 /**
  * @Author: Georgia Petroff
  * @Project: Code for mini robot "Shirley"
+ *           Includes programming for mecanum wheels with encoders
  * @Start: 07/10/20
  * @Last: 07/10/20
  */
