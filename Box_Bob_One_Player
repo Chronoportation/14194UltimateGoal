@@ -12,7 +12,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 //Tell the program it's going to be a TeleOp (driver controlled) program
@@ -22,7 +21,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 //this is the class that will actually be running code
 //make sure to put the extension otherwise it won't work/compile
-public class Driver_Controlled_1_Player extends OpMode {
+public class Driver_Controlled extends OpMode {
     //this is where you're going to be declaring your variables for whatever hardware you need
     //name everything private since you're not using it anywhere else
     //follow the access modifier with the name of the class of the piece of hardware you want
@@ -113,7 +112,7 @@ public class Driver_Controlled_1_Player extends OpMode {
         if (gamepad1.left_bumper){
             sSpeed = 0;
             if (gamepad1.a){
-            sSpeed = -0.4;
+                sSpeed = -0.4;
             }
             if (gamepad1.b){
                 sSpeed = -0.35;
