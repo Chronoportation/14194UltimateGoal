@@ -1,3 +1,10 @@
+/**
+ * @Author: Georgia Petroff
+ * @Project: Basic autonomous to move forward
+ * @Start: 11/20/20
+ * @Last: 12/03/20
+ */
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
