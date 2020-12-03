@@ -65,7 +65,7 @@ public class LaunchLine_AUTO extends OpMode {
 
     @Override
     public void loop() {
-        
+        move(9400.4, 1.0, 0);
     }
 
     /**
