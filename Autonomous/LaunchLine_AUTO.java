@@ -8,12 +8,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous
-public class LaunchLine_AUTO extends OpMode {
+public class LaunchLine_AUTO extends LinearOpMode {
     //prepares needed hardware
     private DcMotor driveRF;//drive wheel located RIGHT FRONT
     private DcMotor driveRB;//drive wheel located RIGHT BACK
@@ -24,12 +26,14 @@ public class LaunchLine_AUTO extends OpMode {
     private DcMotor mainTreads;
     private DcMotor backTreads;
     private Servo bandHolder;
-    private Servo extendContinuous;
+    private CRServo extendContinuous;
     private Servo rotateArm;
     private Servo clampArm;
 
+    private ElapsedTime runtime = new ElapsedTime();
+
     @Override
-    public void init() {
+    public void runOpMode() throws InterruptedException {
         //assigning each variable to its class
         driveRF = hardwareMap.get(DcMotor.class, "driveRF");
         driveRB = hardwareMap.get(DcMotor.class, "driveRB");
@@ -62,17 +66,49 @@ public class LaunchLine_AUTO extends OpMode {
         mainTreads = hardwareMap.get(DcMotor.class, "mainTreads");
         backTreads = hardwareMap.get(DcMotor.class, "backTreads");
         bandHolder = hardwareMap.get(Servo.class, "bandHolder");
-        extendContinuous = hardwareMap.get(Servo.class, "extendContinuous");
+        extendContinuous = hardwareMap.get(CRServo.class, "extendContinuous");
         rotateArm = hardwareMap.get(Servo.class, "rotateArm");
         clampArm = hardwareMap.get(Servo.class, "clampArm");
 
         telemetry.addData("Status", "Initialized");
-        telemetry.update();
-    }
 
-    @Override
-    public void loop() {
-        move(9400.4, 1.0, 0);
+        waitForStart();
+
+        double sSpeed;
+
+        bandHolder.setPosition(0.4);
+        move(6775, 1.0, 0);
+        driveRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //move(250,1.0,2);
+
+        sSpeed = 0.21;
+        Shooter.setPower(sSpeed);
+        runtime.reset();
+        while (opModeIsActive() && runtime.seconds() < 0.75)
+        {
+            telemetry.update();
+        }
+
+        mainTreads.setPower(1);
+        backTreads.setPower(-1);
+        Shooter.setPower(sSpeed);
+        runtime.reset();
+        while (opModeIsActive() && runtime.seconds() < 1.5)
+        {
+            telemetry.update();
+        }
+        mainTreads.setPower(0);
+        backTreads.setPower(0);
+        Shooter.setPower(0);
+
+        move(750, -1.0, 4);
+        driveRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     /**
