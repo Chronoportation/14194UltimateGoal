@@ -2,7 +2,7 @@
  * @Author: Georgia Petroff
  * @Project: Basic autonomous to move forward
  * @Start: 11/20/20
- * @Last: 12/03/20
+ * @Last: 12/07/20
  */
 
 package org.firstinspires.ftc.teamcode;
@@ -77,14 +77,11 @@ public class LaunchLine_AUTO extends LinearOpMode {
         double sSpeed;
 
         bandHolder.setPosition(0.4);
-        move(6775, 1.0, 0);
-        driveRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //move(250,1.0,2);
 
-        sSpeed = 0.21;
+        move(6800, 0.6, 0);
+        resetEncoders();
+
+        sSpeed = 0.25;
         Shooter.setPower(sSpeed);
         runtime.reset();
         while (opModeIsActive() && runtime.seconds() < 0.75)
@@ -104,17 +101,15 @@ public class LaunchLine_AUTO extends LinearOpMode {
         backTreads.setPower(0);
         Shooter.setPower(0);
 
-        move(750, -1.0, 4);
-        driveRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        activateEncoders();
+        move(2000, 0.6, 4);
+        resetEncoders();
     }
 
     /**
      * Pre: all four drive wheels have been initialized and declared
      * Param: int ticks - the absolute value of amount of ticks that the axel will be spinning per motor
-     *        double power - range -1.0 to 1.0 (positive for forward, negative for backward)
+     *        double power - range 0 to 1.0
      *        int direction - range 0 to 7 (use the directions established below)
      * Post: encoder positions of drive motors
      * Return: none (void)
@@ -192,6 +187,7 @@ public class LaunchLine_AUTO extends LinearOpMode {
                 break;
             case 4:
                 ticks = -ticks;
+                power = -power;
 
                 driveRF.setTargetPosition(ticks);
                 driveRB.setTargetPosition(ticks);
@@ -213,6 +209,8 @@ public class LaunchLine_AUTO extends LinearOpMode {
                 break;
             case 5:
                 ticks = -ticks;
+                power = -power;
+                
                 driveRF.setTargetPosition(ticks);
                 driveLB.setTargetPosition(ticks);
 
@@ -289,5 +287,21 @@ public class LaunchLine_AUTO extends LinearOpMode {
                 driveLB.setPower(0.0);
                 break;
         }
+    }
+
+    private void activateEncoders()
+    {
+        driveRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        driveRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        driveLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        driveLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    private void resetEncoders()
+    {
+        driveRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 }
