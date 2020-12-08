@@ -51,16 +51,10 @@ public class LaunchLine_AUTO extends LinearOpMode {
         driveLB.setDirection(DcMotor.Direction.REVERSE);
 
         //reset any encoder values
-        driveRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveRB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        resetEncoders();
 
         //give each motor an encoder
-        driveRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveRB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveLF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        activateEncoders();
 
         Shooter = hardwareMap.get(DcMotor.class, "Shooter");
         mainTreads = hardwareMap.get(DcMotor.class, "mainTreads");
@@ -78,7 +72,7 @@ public class LaunchLine_AUTO extends LinearOpMode {
 
         bandHolder.setPosition(0.4);
 
-        move(6800, 0.6, 0);
+        move(6850, 0.6, 0);
         resetEncoders();
 
         sSpeed = 0.25;
@@ -107,12 +101,12 @@ public class LaunchLine_AUTO extends LinearOpMode {
     }
 
     /**
-     * Pre: all four drive wheels have been initialized and declared
-     * Param: int ticks - the absolute value of amount of ticks that the axel will be spinning per motor
+     * @Pre: all four drive wheels have been initialized and declared
+     * @Param: int ticks - the absolute value of amount of ticks that the axel will be spinning per motor
      *        double power - range 0 to 1.0
      *        int direction - range 0 to 7 (use the directions established below)
-     * Post: encoder positions of drive motors
-     * Return: none (void)
+     * @Post: encoder positions of drive motors
+     * @Return: none (void)
      *
      *
      * Here's how the directions work according to a clock:
@@ -210,7 +204,7 @@ public class LaunchLine_AUTO extends LinearOpMode {
             case 5:
                 ticks = -ticks;
                 power = -power;
-                
+
                 driveRF.setTargetPosition(ticks);
                 driveLB.setTargetPosition(ticks);
 
@@ -289,6 +283,14 @@ public class LaunchLine_AUTO extends LinearOpMode {
         }
     }
 
+    /**
+     * @Pre: all four drive wheels have been declared and initialized
+     * @Param: none
+     * @Post: none
+     * @Return: none (void)
+     *
+     * Will activate all four drive wheels to run with encoders
+     */
     private void activateEncoders()
     {
         driveRF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -297,6 +299,14 @@ public class LaunchLine_AUTO extends LinearOpMode {
         driveLB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
+    /**
+     * @Pre: all four drive wheels have been declared and initialized
+     * @Param: none
+     * @Post: none
+     * @Return: none (void)
+     *
+     * Will reset the current data for all four drive wheels' encoders
+     */
     private void resetEncoders()
     {
         driveRF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -304,4 +314,3 @@ public class LaunchLine_AUTO extends LinearOpMode {
         driveLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         driveLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
-}
