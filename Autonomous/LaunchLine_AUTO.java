@@ -314,3 +314,4 @@ public class LaunchLine_AUTO extends LinearOpMode {
         driveLF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         driveLB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
+}
